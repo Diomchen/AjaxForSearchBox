@@ -31,10 +31,17 @@
             if(content.value == ""){
                 return ;
             }
+
+            xmlHttp = createXmlHttp();//使用一个xmlHttp的对象
+            var url = "search?keyword="+escape(content.value);//escape是防止中文传输出错
+            xmlHttp.open("GET",url,true);//true表示JavaScript脚本会在send()方法之后继续执行，而不会等待来自服务器的响应
+
         }
 
-        xmlHttp = createXmlHttp();
-        alert(xmlHttp);
+
+
+        xmlHttp.onreadystatechange = callBack;
+        xmlHttp.send(null);
 
         function createXmlHttp(){
             var xmlHttp;
@@ -44,12 +51,27 @@
             if(window.ActiveXObject){
                 xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
                 if(!xmlHttp){
-                    xmlHttp = new ActiveXObject("Msxml.XMLHTTP");
+                    xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
                 }
             }
+            return xmlHttp;
         }
 
-        // function
+        function callBack(){
+            if(xmlHttp.readyState == 4){
+                if(xmlHttp.status == 200){
+                    var result = xmlHttp.responseText;
+                    var json = eval("("+result+")");
+                }
+                else if(xmlHttp.status == 404){
+
+                }
+                else if(xmlHttp.status == 500){
+
+                }
+            }
+
+        }
 
     </script>
 </head>

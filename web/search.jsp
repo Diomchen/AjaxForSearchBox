@@ -35,10 +35,7 @@
             xmlHttp = createXmlHttp();//使用一个xmlHttp的对象
             var url = "search?keyword="+escape(content.value);//escape是防止中文传输出错
             xmlHttp.open("GET",url,true);//true表示JavaScript脚本会在send()方法之后继续执行，而不会等待来自服务器的响应
-
         }
-
-
 
         xmlHttp.onreadystatechange = callBack;
         xmlHttp.send(null);
@@ -70,15 +67,48 @@
 
                 }
             }
-
         }
 
+        function setContent(contents) {
+            var size = contents.length;
+            for(var i=0 ; i<size ; i++ ){
+                var nextNode = contents[i];
+                var tr = nextNode.createElement('tr');
+                var td = nextNode.createElement('td');
+                td.setAttribute("bgcolor","#");
+                td.setAttribute("borser","#FFFAFA");
+                td.onmouseover = function(){
+                    this.className = 'mouseOver';
+                };
+
+                td.onmouseout = function () {
+                    this.className = 'mouseOut';
+                };
+
+                td.onclick = function () {
+
+                };
+                var text = document.createTextNode(nextNode);
+                td.appendChild(text);
+                tr.appendChild(td);
+                document.getElementById('content-table-tbody').appendChild(tr);
+            }
+        }
     </script>
 </head>
 <body>
     <div id="search-body">
         <input type="search" name="search" id="search-box" onkeyup="getMoreContents()"/>
         <button  id="search-button" >Search</button>
+        <div id = "popDiv">
+            <table id="content_table" bgcolor="#f0f8ff" border = "0" cellspacing="0" cellpadding="0" width="300">
+                <tbody id="content-table-tbody">
+                    <tr><td>sadsa</td></tr>
+                    <tr><td>sadsfdsfdsa</td></tr>
+                    <tr><td>sadsarqwerqwrwqrwq</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
